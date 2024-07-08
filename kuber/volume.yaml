@@ -1,0 +1,53 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: popovmi-tictactoe-pv
+  labels:
+    k8s-app: popovmi-tictactoe-server
+    project: popovmi-tictactoe
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  local:
+    # данный пусть специфичен для Linux subsistem for Windows и транслируется в
+    # C:\volumes\data\popovmi-tictactoe
+    # эта директория должна быть создана перед созданием диска
+    path: "/Users/max/volumes/popovmi-tictactoe"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/os
+          operator: In
+          values:
+          - linux
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: popovmi-tictactoe-pv-claim
+  namespace: popovmi-tictactoe
+  labels:
+    k8s-app: popovmi-tictactoe-server
+    project: popovmi-tictactoe
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: local-storage
+  volumeName: popovmi-tictactoe-pv
