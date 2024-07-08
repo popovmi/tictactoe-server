@@ -1,4 +1,4 @@
-STAGE=prod
+STAGE=$1
 NAMESPACE=popovmi-tictactoe-$STAGE
 
 kubectl create namespace $NAMESPACE
