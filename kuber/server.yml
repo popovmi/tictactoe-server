@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: popovmi-tictactoe-server
-  namespace: popovmi-tictactoe
+  namespace: {{NAMESPACE}}
   labels:
     k8s-app: popovmi-tictactoe-server
     project: popovmi-tictactoe
@@ -20,27 +20,28 @@ spec:
       containers:
         - name: popovmi-tictactoe-server
           # this is how we named our docker image
-          image: popovmi/tictactoe-server
+          image: {{SERVER_IMAGE}}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           volumeMounts:
-            - name: popovmi-tictactoe-pv
+            - name: {{NAMESPACE}}-pv
               mountPath: /app/data
       volumes:
-        - name: popovmi-tictactoe-pv
+        - name: {{NAMESPACE}}-pv
           persistentVolumeClaim:
-            claimName: popovmi-tictactoe-pv-claim
+            claimName: {{NAMESPACE}}-pv-claim
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: popovmi-tictactoe-server
-  namespace: popovmi-tictactoe
+  namespace: {{NAMESPACE}}
   labels:
     k8s-app: popovmi-tictactoe-server
     project: popovmi-tictactoe
 spec:
+  type: NodePort
   ports:
     - protocol: TCP
       port: 80

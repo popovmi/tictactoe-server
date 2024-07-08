@@ -1,0 +1,22 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: popovmi-tictactoe-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: {{NAMESPACE}}
+  labels:
+    project: popovmi-tictactoe
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{NAMESPACE}}.localtest.me
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: popovmi-tictactoe-server
+                port:
+                  number: 80

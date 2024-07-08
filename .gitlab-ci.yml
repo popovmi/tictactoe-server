@@ -1,0 +1,22 @@
+image: docker:stable
+services:
+# we will build our images by running docker daemon inside a container
+- docker:dind
+variables:
+  DOCKER_DRIVER: overlay2
+  SERVER_DOCKER_IMAGE: popovmi/tictactoe-server
+
+stages:
+- build
+- deploy
+
+build_server:
+  stage: build
+  script:
+  - docker build -f ./server/Dockerfile -t $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA ./server
+  - docker tag $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA $SERVER_DOCKER_IMAGE:latest
+
+deploy_server:
+  stage: deploy
+  script:
+  - ./kuber/init_namespace.sh $CI_COMMIT_BRANCH
