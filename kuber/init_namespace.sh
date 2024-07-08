@@ -1,7 +1,7 @@
 STAGE=$1
 
-if [[STAGE == "main"]]; then
-  STAGE = "prod"
+if [[ $STAGE == "main" ]]; then
+  STAGE="prod"
 fi
 
 echo "STAGE: $STAGE"
