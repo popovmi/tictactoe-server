@@ -4,13 +4,19 @@ metadata:
   name: popovmi-tictactoe-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx
-  namespace: popovmi-tictactoe
+  namespace: {{NAMESPACE}}
   labels:
     project: popovmi-tictactoe
 spec:
-  defaultBackend:
-    service:
-      name: popovmi-tictactoe-server
-      port:
-        number: 80
+  ingressClassName: nginx
+  rules:
+    - host: {{NAMESPACE}}.localtest.me
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: popovmi-tictactoe-server
+                port:
+                  number: 80

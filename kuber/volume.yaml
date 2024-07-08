@@ -9,7 +9,7 @@ volumeBindingMode: Immediate
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: popovmi-tictactoe-pv
+  name: {{NAMESPACE}}-pv
   labels:
     k8s-app: popovmi-tictactoe-server
     project: popovmi-tictactoe
@@ -25,7 +25,7 @@ spec:
     # данный пусть специфичен для Linux subsistem for Windows и транслируется в
     # C:\volumes\data\popovmi-tictactoe
     # эта директория должна быть создана перед созданием диска
-    path: "/Users/max/volumes/popovmi-tictactoe"
+    path: /Users/max/volumes/popovmi-tictactoe/{{NAMESPACE}}
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -38,8 +38,8 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: popovmi-tictactoe-pv-claim
-  namespace: popovmi-tictactoe
+  name: {{NAMESPACE}}-pv-claim
+  namespace: {{NAMESPACE}}
   labels:
     k8s-app: popovmi-tictactoe-server
     project: popovmi-tictactoe
@@ -50,4 +50,4 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: local-storage
-  volumeName: popovmi-tictactoe-pv
+  volumeName: {{NAMESPACE}}-pv
