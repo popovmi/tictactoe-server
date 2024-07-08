@@ -10,7 +10,7 @@ stages:
 - build
 
 build_server:
-  stage: package
+  stage: build
   script:
   - docker build -f ./server/Dockerfile -t $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA ./server
   - docker tag $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA $SERVER_DOCKER_IMAGE:latest
