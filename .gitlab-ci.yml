@@ -19,4 +19,5 @@ build_server:
 deploy_server:
   stage: deploy
   script:
+  - echo $(ls -al)
   - ./init_namespace.sh prod
