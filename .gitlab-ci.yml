@@ -19,4 +19,4 @@ build_server:
 deploy_server:
   stage: deploy
   script:
-  - ./init_namespace.sh $BRANCH
+  - ./kuber/init_namespace.sh $BRANCH
