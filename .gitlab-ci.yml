@@ -4,7 +4,7 @@ services:
 - docker:dind
 variables:
   DOCKER_DRIVER: overlay2
-  SERVER_DOCKER_IMAGE: $CI_REGISTRY_IMAGE/server
+  SERVER_DOCKER_IMAGE: popovmi/server
 
 stages:
 - build
