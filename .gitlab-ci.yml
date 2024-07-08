@@ -20,4 +20,4 @@ deploy_server:
   stage: deploy
   script:
   - echo $(ls -al)
-  - ./init_namespace.sh prod
+  - ./init_namepsace.sh prod
