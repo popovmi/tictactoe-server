@@ -3,8 +3,7 @@ const { writeFileSync } = require('fs');
 const branch = process.env.CI_COMMIT_BRANCH;
 const environment = branch === 'main' ? 'prod' : branch;
 
-const gitlabCI = `
-deploy_server:
+const gitlabCI = `deploy_server:
   stage: deploy
   environment: 
     name: ${environment}

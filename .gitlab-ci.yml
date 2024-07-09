@@ -29,9 +29,10 @@ define_environment:
 trigger:deploy:
   stage: trigger
   needs:
+    - build_server
     - define_environment
   trigger:
     include:
       - artifact: dynamic-gitlab-ci.yml
-        job: build_server
+        job: define_environment
     strategy: depend
