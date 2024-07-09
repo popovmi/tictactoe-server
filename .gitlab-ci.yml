@@ -8,7 +8,7 @@ variables:
 
 stages:
 - build
-- deploy
+- trigger
 
 build_server:
   stage: build
@@ -16,10 +16,21 @@ build_server:
   - docker build -f ./Dockerfile -t $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA .
   - docker tag $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA $SERVER_DOCKER_IMAGE:latest
 
-deploy_server:
-  stage: deploy
-  before_script: 
-  - ./kuber/define_env.sh $CI_COMMIT_BRANCH
-  environment: $CI_ENVIRONMENT
+define_environment:
+  stage: build
   script:
-  - ./kuber/deploy_server.sh $CI_COMMIT_BRANCH
+    - node ./kuber/generate-gitlab-ci.js
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - dynamic-gitlab-ci.yml
+
+trigger:deploy:
+  stage: trigger
+  needs:
+    - build
+  trigger:
+    include:
+      - artifact: dynamic-gitlab-ci.yml
+        job: build_server
+    strategy: depend

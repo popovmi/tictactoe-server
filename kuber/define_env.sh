@@ -1,9 +1,0 @@
-CI_ENVIRONMENT=$1
-
-if [[ $CI_ENVIRONMENT == "main" ]]; then
-  CI_ENVIRONMENT="prod"
-fi
-
-echo "CI_ENVIRONMENT: $CI_ENVIRONMENT"
-
-export $CI_ENVIRONMENT
