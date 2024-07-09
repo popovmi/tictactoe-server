@@ -1,38 +1,40 @@
-image: docker:stable
-services:
+# image: docker:stable
+# services:
   # we will build our images by running docker daemon inside a container
-  - docker:dind
+  # - docker:dind
 variables:
-  DOCKER_DRIVER: overlay2
+  # DOCKER_DRIVER: overlay2
   SERVER_DOCKER_IMAGE: popovmi/tictactoe-server
+  DYNAMIC_GITLAB_CI_FILE: generated/dynamic-gitlab-ci.yml
 
 stages:
   - build
-  - trigger
+  - generate_deployment
+  - deploy_trigger
   - deploy
 
 build_server:
   stage: build
   script:
-    - docker build -f ./Dockerfile -t $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker build -f Dockerfile -t $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA .
     - docker tag $SERVER_DOCKER_IMAGE:$CI_COMMIT_SHORT_SHA $SERVER_DOCKER_IMAGE:latest
 
-define_environment:
-  stage: build
+generate_dynamic_gitlab_ci:
+  stage: generate_deployment
   needs: ['build_server']
   script:
-    - ./kuber/generate-gitlab-ci.sh
+    - kuber/generate_dynamic_gitlab_ci.sh
   artifacts:
     expire_in: 1 week
     paths:
-      - generated/dynamic-gitlab-ci.yml
+      - $DYNAMIC_GITLAB_CI_FILE
 
 trigger:deploy:
-  stage: trigger
+  stage: deploy_trigger
   needs:
-    - ['build_server', 'define_environment']
+    - ['build_server', 'generate_dynamic_gitlab_ci']
   trigger:
     include:
-      - artifact: generated/dynamic-gitlab-ci.yml
-        job: define_environment
+      - artifact: $DYNAMIC_GITLAB_CI_FILE
+        job: generate_dynamic_gitlab_ci
     strategy: depend
