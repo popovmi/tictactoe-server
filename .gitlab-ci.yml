@@ -5,6 +5,7 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
   SERVER_DOCKER_IMAGE: popovmi/tictactoe-server
+  GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_PROJECT_NAME/$CI_PIPELINE_ID'
 
 stages:
 - build
