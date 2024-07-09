@@ -9,6 +9,7 @@ variables:
 stages:
 - build
 - trigger
+- deploy
 
 build_server:
   stage: build
