@@ -14,4 +14,4 @@ gitlabCI="deploy_server:
   script:
   - ./kuber/deploy_server.sh ${CI_COMMIT_BRANCH}"
 
-echo "$gitlabCI" >> generated/dynamic-gitlab-ci.yml
+echo "$gitlabCI" > ./generated/dynamic-gitlab-ci.yml
