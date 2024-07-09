@@ -20,7 +20,7 @@ build_server:
 define_environment:
   stage: build
   script:
-    - node ./kuber/generate-gitlab-ci.js
+    - ./kuber/generate-gitlab-ci.sh
   artifacts:
     expire_in: 1 week
     paths:
