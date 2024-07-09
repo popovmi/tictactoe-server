@@ -15,4 +15,4 @@ gitlabCI="deploy_server:
 
 mkdir generated
 
-echo $gitlabCI > $DYNAMIC_GITLAB_CI_FILE
+echo "$gitlabCI" >$DYNAMIC_GITLAB_CI_FILE
