@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: CORS_ORIGIN
-            - value: ${CORS_ORIGIN}
+            - value: $CORS_ORIGIN
           ports:
             - containerPort: 8080
           volumeMounts:
