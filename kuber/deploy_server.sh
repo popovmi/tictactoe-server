@@ -5,6 +5,7 @@ if [[ $STAGE == "main" ]]; then
 fi
 
 echo "STAGE: $STAGE"
+echo "CORS_ORIGIN: $CORS_ORIGIN"
 
 NAMESPACE=popovmi-tictactoe-$STAGE
 
