@@ -1,15 +1,15 @@
 image: docker:stable
 services:
-# we will build our images by running docker daemon inside a container
-- docker:dind
+  # we will build our images by running docker daemon inside a container
+  - docker:dind
 variables:
   DOCKER_DRIVER: overlay2
   SERVER_DOCKER_IMAGE: popovmi/tictactoe-server
 
 stages:
-- build
-- trigger
-- deploy
+  - build
+  - trigger
+  - deploy
 
 build_server:
   stage: build
@@ -19,6 +19,7 @@ build_server:
 
 define_environment:
   stage: build
+  needs: ['build_server']
   script:
     - ./kuber/generate-gitlab-ci.sh
   artifacts:
@@ -29,7 +30,7 @@ define_environment:
 trigger:deploy:
   stage: trigger
   needs:
-    - ["build_server", "define_environment"]
+    - ['build_server', 'define_environment']
   trigger:
     include:
       - artifact: generated/dynamic-gitlab-ci.yml
