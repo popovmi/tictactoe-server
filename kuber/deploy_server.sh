@@ -3,7 +3,7 @@ ENVIRONMENT=$1
 echo "Prepare deployment for env: $ENVIRONMENT"
 
 NAMESPACE=popovmi-tictactoe-$ENVIRONMENT
-HOSTNAME=$NAMESPACE.localtest.me
+HOSTNAME=api.$NAMESPACE.localtest.me
 
 sed "s/{{NAMESPACE}}/$NAMESPACE/g" kuber/volume.yml | kubectl apply -f -
 
