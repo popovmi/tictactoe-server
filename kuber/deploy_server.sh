@@ -1,13 +1,8 @@
-STAGE=$1
+ENVIRONMENT=$1
 
-if [[ $STAGE == "main" ]]; then
-  STAGE="prod"
-fi
+echo "Prepare deployment for env: $ENVIRONMENT"
 
-echo "STAGE: $STAGE"
-echo "CORS_ORIGIN: $CORS_ORIGIN"
-
-NAMESPACE=popovmi-tictactoe-$STAGE
+NAMESPACE=popovmi-tictactoe-$ENVIRONMENT
 
 sed "s/{{NAMESPACE}}/$NAMESPACE/g" kuber/volume.yml | kubectl apply -f -
 sed -e "s/{{NAMESPACE}}/$NAMESPACE/g" \
