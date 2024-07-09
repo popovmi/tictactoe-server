@@ -24,7 +24,7 @@ define_environment:
   artifacts:
     expire_in: 1 week
     paths:
-      - dynamic-gitlab-ci.yml
+      - generated/dynamic-gitlab-ci.yml
 
 trigger:deploy:
   stage: trigger
@@ -33,6 +33,6 @@ trigger:deploy:
     - define_environment
   trigger:
     include:
-      - artifact: dynamic-gitlab-ci.yml
+      - artifact: generated/dynamic-gitlab-ci.yml
         job: define_environment
     strategy: depend
