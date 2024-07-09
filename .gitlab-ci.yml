@@ -18,5 +18,7 @@ build_server:
 
 deploy_server:
   stage: deploy
+  before_script: ./kuber/define_env.sh
+  environment: $CI_ENVIRONMENT
   script:
   - ./kuber/deploy_server.sh $CI_COMMIT_BRANCH
