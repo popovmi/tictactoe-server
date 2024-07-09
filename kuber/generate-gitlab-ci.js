@@ -6,7 +6,8 @@ const environment = branch === 'main' ? 'prod' : branch;
 const gitlabCI = `
 deploy_server:
   stage: deploy
-  environment: ${environment}
+  environment: 
+    name: ${environment}
   script:
   - ./kuber/deploy_server.sh $CI_COMMIT_BRANCH`;
 
