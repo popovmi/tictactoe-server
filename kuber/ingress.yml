@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{NAMESPACE}}.localtest.me
+    - host: {{HOSTNAME}}
       http:
         paths:
           - path: /
