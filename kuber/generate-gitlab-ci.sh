@@ -7,8 +7,6 @@ if [[ "$branch" == "main" ]]; then
   environment="prod"
 fi
 
-echo "CORS_ORIGIN: $CORS_ORIGIN"
-
 gitlabCI="deploy_server:
   stage: deploy
   environment: 
