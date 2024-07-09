@@ -22,6 +22,9 @@ spec:
           # this is how we named our docker image
           image: {{SERVER_IMAGE}}
           imagePullPolicy: IfNotPresent
+          env:
+            - name: CORS_ORIGIN
+            - value: ${CORS_ORIGIN}
           ports:
             - containerPort: 8080
           volumeMounts:
